@@ -27,26 +27,26 @@ VALUES ("Alice", "Turner", 1),
        ("Liam", "Thompson", 7),
        ("Sophia", "Wright", 7),
        ("Ava", "Walker", 8);
-     
-UPDATE employee AS e1
-JOIN employee AS e2 ON e2.role_id = 2
-SET e1.manager_id = e2.id
-WHERE e1.role_id = 1;
 
-UPDATE employee AS e1
-JOIN employee AS e2 ON e2.role_id = 8
-SET e1.manager_id = e2.id
-WHERE e1.role_id = 7;
+UPDATE employee AS emp
+JOIN employee AS manager ON manager.role_id = 2
+SET emp.manager_id = manager.id
+WHERE emp.role_id = 1;
 
-UPDATE employee AS e1
-JOIN employee AS e2 ON e2.role_id = 6
-SET e1.manager_id = e2.id
-WHERE e1.role_id = 5;
+UPDATE employee AS emp
+JOIN employee AS manager ON manager.role_id = 8
+SET emp.manager_id = manager.id
+WHERE emp.role_id = 7;
 
-UPDATE employee AS e1
-JOIN employee AS e2 ON e2.role_id = 4
-SET e1.manager_id = e2.id
-WHERE e1.role_id = 3;
+UPDATE employee AS emp
+JOIN employee AS manager ON manager.role_id = 6
+SET emp.manager_id = manager.id
+WHERE emp.role_id = 5;
+
+UPDATE employee AS emp
+JOIN employee AS manager ON manager.role_id = 4
+SET emp.manager_id = manager.id
+WHERE emp.role_id = 3;
 
 
 SELECT * FROM department;

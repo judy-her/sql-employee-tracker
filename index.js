@@ -9,7 +9,6 @@ const questions = () => {
       message: 'What would you like to do?',
       choices: [
         'view all departments',
-        'view all departments',
         'view all roles',
         'view all employees',
         'add a department',
@@ -21,11 +20,11 @@ const questions = () => {
   ]);
 };
 
-const init = () => {
-  questions();
-  // .then((answers) => writeFile('questions.txt', questions(answers)))
-  // .then(() => console.log('Text File succesfully written'))
-  // .catch((err) => console.log(err));
-};
+// const init = () => {
+//   questions();
+//   // .then((answers) => writeFile('questions.txt', questions(answers)))
+//   // .then(() => console.log('Text File succesfully written'))
+//   // .catch((err) => console.log(err));
+// };
 
-init();
+// init();

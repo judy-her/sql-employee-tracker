@@ -27,7 +27,7 @@ const viewAll_Departments = async () => {
     });
   });
 };
-//ADD view all roles
+//view all roles
 const viewall_roles = async () => {
   return new Promise((resolve, reject) => {
     const sql = `SELECT roles.id, roles.title, roles.salary, department.department_name 
@@ -46,7 +46,7 @@ const viewall_roles = async () => {
   });
 };
 
-// ADD view all employees
+// view all employees
 const viewall_employees = async () => {
   return new Promise((resolve, reject) => {
     const sql = `SELECT 
@@ -74,7 +74,7 @@ LEFT JOIN employee m ON e.manager_id = m.id;`;
     });
   });
 };
-//TODO add a Department
+// add a Department
 const add_department = async () => {
   const departmentQuestions = [
     {
@@ -103,7 +103,7 @@ const add_department = async () => {
   });
 };
 
-//TODO add a role
+//add a role
 const add_role = async () => {
   const roleQuestions = [
     {
@@ -136,6 +136,57 @@ const add_role = async () => {
         reject(err);
       } else {
         console.log(`New role '${new_role}' added!`);
+        resolve();
+      }
+    });
+  });
+};
+
+//TODO add an employee
+const add_employee = async () => {
+  const employeeQuestions = [
+    {
+      name: 'new_employee_first',
+      type: 'input',
+      message: 'Employee first name:',
+    },
+    {
+      name: 'new_employee_last',
+      type: 'input',
+      message: 'Employee last name:',
+    },
+    {
+      name: 'role',
+      type: 'input',
+      message: 'Which role: ',
+    },
+    {
+      name: 'manager_role',
+      type: 'input',
+      message: 'Manager role: ',
+    },
+  ];
+
+  const answers = await inquirer.prompt(employeeQuestions);
+  const { new_employee_first, new_employee_last, role, manager_role } = answers;
+
+  //get the manager's id based on the specified manager_role
+  const managerSql = `SELECT id FROM employee WHERE role_id = ? LIMIT 1`;
+  const managerValue = [manager_role];
+
+  const [managerResult] = await db.promise().query(managerSql, managerValue);
+  const manager_id = managerResult[0] ? managerResult[0].id : null;
+
+  const sql = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)`;
+  const values = [new_employee_first, new_employee_last, role, manager_id];
+
+  return new Promise((resolve, reject) => {
+    db.query(sql, values, (err, result) => {
+      if (err) {
+        console.error(err);
+        reject(err);
+      } else {
+        console.log(`New employee added!`);
         resolve();
       }
     });
@@ -184,6 +235,9 @@ const startQuestions = async () => {
           break;
         case 'add a role':
           await add_role();
+          break;
+        case 'add an employee':
+          await add_employee();
           break;
         case 'exit':
           console.log('Goodbye!');

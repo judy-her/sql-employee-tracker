@@ -27,7 +27,7 @@ const viewAll_Departments = async () => {
     });
   });
 };
-//TODO ADD view all roles
+//ADD view all roles
 const viewall_roles = async () => {
   return new Promise((resolve, reject) => {
     const sql = `SELECT roles.id, roles.title, roles.salary, department.department_name 
@@ -46,7 +46,7 @@ const viewall_roles = async () => {
   });
 };
 
-//TODO ADD view all employees
+// ADD view all employees
 const viewall_employees = async () => {
   return new Promise((resolve, reject) => {
     const sql = `SELECT 
@@ -69,6 +69,73 @@ LEFT JOIN employee m ON e.manager_id = m.id;`;
         reject(err);
       } else {
         console.table(rows);
+        resolve();
+      }
+    });
+  });
+};
+//TODO add a Department
+const add_department = async () => {
+  const departmentQuestions = [
+    {
+      name: 'department_name',
+      type: 'input',
+      message: 'Enter the name of the new department:',
+    },
+  ];
+
+  const answers = await inquirer.prompt(departmentQuestions);
+  const { department_name } = answers;
+
+  const sql = `INSERT INTO department (department_name) VALUES (?)`;
+  const values = [department_name];
+
+  return new Promise((resolve, reject) => {
+    db.query(sql, values, (err, result) => {
+      if (err) {
+        console.error(err);
+        reject(err);
+      } else {
+        console.log(`New department '${department_name}' added!`);
+        resolve();
+      }
+    });
+  });
+};
+
+//TODO add a role
+const add_role = async () => {
+  const roleQuestions = [
+    {
+      name: 'new_role',
+      type: 'input',
+      message: 'Enter the name of the new role:',
+    },
+    {
+      name: 'salary',
+      type: 'input',
+      message: 'Enter salary:',
+    },
+    {
+      name: 'department',
+      type: 'input',
+      message: 'Which Department: ',
+    },
+  ];
+
+  const answers = await inquirer.prompt(roleQuestions);
+  const { new_role, salary, department } = answers;
+
+  const sql = `INSERT INTO roles (title, salary, department_id) VALUES (?,?,?)`;
+  const values = [new_role, salary, department];
+
+  return new Promise((resolve, reject) => {
+    db.query(sql, values, (err, result) => {
+      if (err) {
+        console.error(err);
+        reject(err);
+      } else {
+        console.log(`New role '${new_role}' added!`);
         resolve();
       }
     });
@@ -111,6 +178,12 @@ const startQuestions = async () => {
           break;
         case 'view all employees':
           await viewall_employees();
+          break;
+        case 'add a department':
+          await add_department();
+          break;
+        case 'add a role':
+          await add_role();
           break;
         case 'exit':
           console.log('Goodbye!');

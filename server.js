@@ -142,7 +142,7 @@ const add_role = async () => {
   });
 };
 
-//TODO add an employee
+// Add an employee
 const add_employee = async () => {
   const employeeQuestions = [
     {
@@ -187,6 +187,48 @@ const add_employee = async () => {
         reject(err);
       } else {
         console.log(`New employee added!`);
+        resolve();
+      }
+    });
+  });
+};
+
+//update an employee role
+
+const update_employee = async () => {
+  const updateQuestions = [
+    {
+      name: 'employee_first',
+      type: 'input',
+      message: 'First Name:',
+    },
+    {
+      name: 'employee_last',
+      type: 'input',
+      message: 'Last Name:',
+    },
+    {
+      name: 'new_role',
+      type: 'input',
+      message: 'Which role:',
+    },
+  ];
+
+  const answers = await inquirer.prompt(updateQuestions);
+  const { employee_first, employee_last, new_role } = answers;
+
+  const sql = `UPDATE employee
+               SET role_id = ?
+               WHERE first_name = ? AND last_name = ?`;
+  const values = [new_role, employee_first, employee_last];
+
+  return new Promise((resolve, reject) => {
+    db.query(sql, values, (err, result) => {
+      if (err) {
+        console.error(err);
+        reject(err);
+      } else {
+        console.log(`Employee role updated!`);
         resolve();
       }
     });
@@ -238,6 +280,9 @@ const startQuestions = async () => {
           break;
         case 'add an employee':
           await add_employee();
+          break;
+        case 'update an employee role':
+          await update_employee();
           break;
         case 'exit':
           console.log('Goodbye!');

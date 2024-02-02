@@ -4,12 +4,13 @@ JOIN department ON roles.department_id = department.id;
 
 -- code from tutor salvarado in AskBCS
 SELECT 
-    e.first_name AS Employee_First_Name,
-    e.last_name AS Employee_Last_Name,
+    e.id AS employee_id,
+    e.first_name AS First_Name,
+    e.last_name AS Last_Name,
     r.title AS Role,
+    r.salary AS Salary,
     d.department_name AS Department,
-    m.first_name AS Manager_First_Name,
-    m.last_name AS Manager_Last_Name
+    CONCAT(m.first_name, " ", m.last_name) AS Manager
 FROM
     employee e
 LEFT JOIN roles r ON e.role_id = r.id

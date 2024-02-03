@@ -25,7 +25,7 @@ To Install necessary dependencies, make sure to run the following command:
 To start this cli app, you can type node server.js in the terminal. Once this is done, you will be asked to choose an option. If you choose “view all departments,” “view all roles”, or “view all employees” you will be shown a table with the chosen data. You will then be asked again to choose an option. If you choose “add a department” you will be prompted to add the department name after which it will be added to the new department table. The same will be for adding a new role and adding a new employee. To see the new department, role,and new employee table changed, simply choose the table you wish to view to see the new data. To update an employee simply choose that option, type the name of the current employee and type the department role in which they will be updated to.
 For full access simply click on this link: https://github.com/judy-her/sql-employee-tracker
 
-For a video demo of this app click this link:
+For a video demo of this app click this link: https://www.loom.com/share/82c4d66ba98745618dc49396847a36a3?sid=9da5d98b-b027-4a9c-be54-4f929b125c7b
 
 ![sql-tracker](assets/images/Screenshot-sql-empTracker.png)
 
